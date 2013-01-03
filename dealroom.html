@@ -15,6 +15,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
   <script type="text/javascript">
+  
+  var loggedUser='';
   	function showLoading() 
 	{
 		//console.log("inside show loading");
@@ -26,6 +28,18 @@
 		//console.log("inside hide loading");
 		$("#maskLoad").unmask();
 	}   
+	
+	function onPageLoad() 
+	{
+	   osapi.people.get({
+		userId : '@me'
+		}).execute(function(response) {
+		var user =response.name.formatted; 
+		var n=user.indexOf("@");
+				loggedUser= user.substring(0, n);
+				 });
+			   
+	}
 	
   </script>  
  
@@ -715,7 +729,7 @@ else{
 	//my_form.submit();
 	
 	osapi.http.get({
-    'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8080/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date,
+    'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8080/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date+'&logged-user='+loggedUser,
     'format' : 'json',
     'authz' : 'signed'
 	}).execute(onGroupCreated);
@@ -760,7 +774,7 @@ gadgets.util.registerOnLoadHandler(init);
 </script>
 </head>
 
-<body id="maskLoad">
+<body id="maskLoad" onLoad="onPageLoad()">
 
 <div id="stylized" class="myform" style="margin-top:70px;font-family:Tahoma">
 
