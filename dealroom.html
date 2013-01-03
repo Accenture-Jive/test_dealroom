@@ -34,10 +34,7 @@
 		userId : '@me'
 		}).execute(function(response) {
         //alert(JSON.stringify(response));
-		var user =response.name.formatted; 
-		alert("user: "+user);
-		var n=user.indexOf("@");
-		var loggedUser= user.substring(0, n);				
+		var loggedUser =response.name.formatted; 
 		alert("loggedUser: "+loggedUser);
 			   });
 			   
