@@ -34,11 +34,13 @@
 	   osapi.people.get({
 		userId : '@me'
 		}).execute(function(response) {
+		alert(JSON.stringify(response));
 		var user =response.name.formatted; 
 		alert(user);
 		var n=user.indexOf("@");
-				loggedUser= user.substring(0, n);
-				alert(loggedUser);
+		alert(n);
+		loggedUser= user.substring(0, n);
+		alert(loggedUser);
 				 });
 			   
 	}
