@@ -15,8 +15,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
   <script type="text/javascript">
-  
- // var loggedUser='';
+ 
   	function showLoading() 
 	{
 		//console.log("inside show loading");
@@ -34,12 +33,13 @@
 	   osapi.people.get({
 		userId : '@me'
 		}).execute(function(response) {
+        //alert(JSON.stringify(response));
 		var user =response.name.formatted; 
 		alert("user: "+user);
 		var n=user.indexOf("@");
-				var loggedUser= user.substring(0, n);
-				alert("loggedUser: "+loggedUser);
-				 });
+		var str= user.substring(0, n);				
+		alert("str: "+str);
+			   });
 			   
 	}
 	
