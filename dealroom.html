@@ -34,9 +34,9 @@
 	   osapi.people.get({
 		userId : '@me'
 		}).execute(function(response) {
-        alert(JSON.stringify(response));
+       // alert(JSON.stringify(response));
 		loggedUser =response.id; 
-		alert("loggedUser: "+loggedUser);
+		//alert("loggedUser: "+loggedUser);
 			   });
 			   
 	}
@@ -727,7 +727,7 @@ else{
 	
 	document.body.appendChild(my_form);
 	//my_form.submit();
-	alert("loggedUser: "+loggedUser);
+	//alert("loggedUser: "+loggedUser);
 	osapi.http.get({
     'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8080/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date+'&logged-user='+loggedUser,
     'format' : 'json',
