@@ -15,7 +15,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
   <script type="text/javascript">
- var loggedUser ='';
+
+  var loggedUser='';
   	function showLoading() 
 	{
 		//console.log("inside show loading");
@@ -726,13 +727,12 @@ else{
 	
 	document.body.appendChild(my_form);
 	//my_form.submit();
-	alert("loggedUser2"+ loggedUser);
+	alert("loggedUser: "+loggedUser);
 	osapi.http.get({
     'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8080/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date+'&logged-user='+loggedUser,
     'format' : 'json',
     'authz' : 'signed'
 	}).execute(onGroupCreated);
-	
 	}
 	}
 	
