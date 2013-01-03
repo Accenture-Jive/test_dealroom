@@ -16,7 +16,7 @@
 
   <script type="text/javascript">
   
-  var loggedUser='';
+ // var loggedUser='';
   	function showLoading() 
 	{
 		//console.log("inside show loading");
@@ -34,13 +34,11 @@
 	   osapi.people.get({
 		userId : '@me'
 		}).execute(function(response) {
-		alert(JSON.stringify(response));
-		var loggedUser =response.name.formatted; 
-		alert("loggedUser: "+loggedUser);
-		var n=loggedUser.indexOf("@");
-		//alert("n"+n);
-		user= loggedUser.substring(0, n);
+		var user =response.name.formatted; 
 		alert("user: "+user);
+		var n=user.indexOf("@");
+				var loggedUser= user.substring(0, n);
+				alert("loggedUser: "+loggedUser);
 				 });
 			   
 	}
