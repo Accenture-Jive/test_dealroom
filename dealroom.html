@@ -36,11 +36,11 @@
 		}).execute(function(response) {
 		alert(JSON.stringify(response));
 		var user =response.name.formatted; 
-		alert(user);
+		alert("user"+user);
 		var n=user.indexOf("@");
-		alert(n);
+		alert("n"+n);
 		loggedUser= user.substring(0, n);
-		alert(loggedUser);
+		alert("loggedUser"+loggedUser);
 				 });
 			   
 	}
