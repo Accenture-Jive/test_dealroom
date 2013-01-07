@@ -17,6 +17,7 @@
   <script type="text/javascript">
 
   var loggedUser='';
+  var loggedUserName='';
   	function showLoading() 
 	{
 		//console.log("inside show loading");
@@ -36,6 +37,7 @@
 		}).execute(function(response) {
        // alert(JSON.stringify(response));
 		loggedUser =response.id; 
+		loggedUserName=response.name.formatted;
 		//alert("loggedUser: "+loggedUser);
 			   });
 			   
@@ -729,7 +731,7 @@ else{
 	//my_form.submit();
 	//alert("loggedUser: "+loggedUser);
 	osapi.http.get({
-    'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8081/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date+'&logged-user='+loggedUser,
+    'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8081/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date+'&logged-user='+loggedUser+'&logged-user='+loggedUserName,
     'format' : 'json',
     'authz' : 'signed'
 	}).execute(onGroupCreated);
