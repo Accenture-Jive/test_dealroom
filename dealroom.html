@@ -17,7 +17,8 @@
   <script type="text/javascript">
 
   var loggedUser='';
-    var flag=false;
+  var loggedUserName='';
+  var flag=false;
   
   	function showLoading() 
 	{
@@ -38,6 +39,7 @@
 		}).execute(function(response) {
        // alert(JSON.stringify(response));
 		loggedUser =response.id; 
+		loggedUserName=response.name.formatted;
 		//alert("loggedUser: "+loggedUser);
 			   });
 			   
@@ -665,6 +667,7 @@ function onGroupCreated(response) {
 	//alert("targetGroupID  :"+targetGroupID);
 	//targetGroup =response.resources.html.ref;
 	//alert("targetGroup  :"+targetGroup);
+	 
 }
 
 function onGroupSave() {
@@ -726,7 +729,7 @@ else{
 	//my_form.submit();
 	//alert("loggedUser: "+loggedUser);
 	osapi.http.get({
-    'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8081/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date+'&logged-user='+loggedUser,
+    'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8081/AIDealRoom/AIServlet?group-name='+group_name+'&proj-start='+start_date+'&logged-user='+loggedUser+'&logged-userName='+loggedUserName,
     'format' : 'json',
     'authz' : 'signed'
 	}).execute(onGroupCreated);
@@ -736,14 +739,14 @@ else{
 }
 
 function refreshiframe() 
-  {
-
-  
+  { 
 if (group_name!='' && start_date!='')
 {
 flag=true;
+//alert("Redirecting");
+
 		osapi.http.get({
-			'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8081/AIDealRoom/LoggerServlet',
+			'href' : 'http://ec2-54-246-36-246.eu-west-1.compute.amazonaws.com:8081/AIDealRoom/LoggerServlet?logged-user='+loggedUser+'&logged-userName='+loggedUserName,
 			'format' : 'text',
 			'authz' : 'signed'
 	}).execute(refreshFrameResponse);
@@ -757,25 +760,43 @@ flag=true;
 	{
 		refreshiframe();
 	}
-	var str=response.content;
-		var n=str.split(".");
+		var str=response.content;
+		//console.log("val: "+str);
 		
 		document.getElementById("frame1").contentDocument.body.style.fontFamily="Tahoma";	
 		document.getElementById("frame1").contentDocument.body.style.fontSize = "12px";
 		document.getElementById("frame1").contentDocument.body.style.color='Grey';
-		document.getElementById("frame1").contentDocument.body.innerHTML = n[0]+"."+ "<br>"+n[1]+"."+ "<br><br><span id='mySpan' style='font-weight:bold;'>"+n[2].fontcolor("#3778C7")+"</span>";
-		var compare=group_name+"Group creation and copy documents done";
-		var pos=n[2].indexOf(compare);
-		if (pos!=-1)
-		{		
-		 $('#stylized').fadeIn(1000, function() {
-  window.setTimeout ( function() {    
-  $('#stylized').fadeOut(1000, function() { 
-  window.location = 'https://acn.jiveon.com/groups/'+group_name.toLowerCase()+'/projects/'+group_name.toLowerCase()+'-dealroom-project'; }) }, 1000);  
-  }); 
-		}
+		document.getElementById("frame1").contentDocument.body.innerHTML = "Copying in Progress.<br>Please leave this window open until the copying process has been completed.<br><br><span id='mySpan' style='font-weight:bold;'>"+str.fontcolor("#3778C7")+"</span>";
+		//alert("n[2]: "+n[2]);
+		//if (n[2]=="Group creation and copy documents done")
+		//var compare=group_name+"Group creation and copy documents done";
 		
-		setTimeout("refreshiframe()",3000); 
+
+
+		var compare="Deal Room creation for "+'"'+group_name+'"'+" complete";
+
+		//alert("Compare: "+compare);
+		var pos=str.indexOf(compare);
+		//alert(pos);
+		if (pos!=-1)
+		{
+		var redirectGrp=group_name.toLowerCase();
+		
+		var redirectGrp=redirectGrp.replace(/[^a-z0-9-\s]/gi, '').replace(/[_\s]/g, '-');
+		
+		var redirectMsg="You will be redirected to the Deal Room project now.";
+		document.getElementById("frame1").contentDocument.body.innerHTML = "Copying in Progress.<br>Please leave this window open until the copying process has been completed.<br><br><span id='mySpan' style='font-weight:bold;'>"+str.fontcolor("#3778C7")+"</span>";//alert("Ripul's Code Works..!!");
+/*		 $('#stylized').fadeIn(1500, function() {
+  window.setTimeout ( function() {    
+  $('#stylized').fadeOut(1500, function() { 
+  window.location = 'https://accenture.jiveon.com/groups/'+redirectGrp+'/projects/'+redirectGrp+'-dealroom-project'; }) }, 2000);  
+  });*/
+     $("#stylized").fadeOut(3000,function(){
+window.location = 'https://accenture.jiveon.com/groups/'+redirectGrp+'/projects/'+redirectGrp+'-dealroom-project';         
+
+    });
+		}
+		setTimeout("refreshiframe()",10); 
 		
 	}
 jQuery.noConflict(); 
